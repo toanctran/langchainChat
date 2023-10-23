@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
   res.setHeader('Content-Type', 'text/html');
 
   // Read the index.html file
-  fs.readFile(path.join(__dirname, 'templates', 'index.html'), 'utf8', (err, data) => {
+  fs.readFile(path.join(__dirname, 'template', 'index.html'), 'utf8', (err, data) => {
     if (err) {
       // If there was an error reading the file, send a 500 status code
       res.statusCode = 500;
