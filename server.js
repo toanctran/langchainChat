@@ -32,7 +32,8 @@ io.on('connection', (socket) => {
   // Handle socket events here
 });
 
+const host = '0.0.0.0'; // Change the host address here
 const port = 3000;
-server.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+server.listen(port, host, () => {
+  console.log(`Server is running at http://${host}:${port}`);
 });
