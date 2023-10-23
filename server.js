@@ -1,8 +1,11 @@
+const express = require('express');
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const server = http.createServer((req, res) => {
+const app = express();
+
+app.get('/', (req, res) => {
   // Set the content type to HTML
   res.setHeader('Content-Type', 'text/html');
 
@@ -21,6 +24,6 @@ const server = http.createServer((req, res) => {
 });
 
 const port = 3000;
-server.listen(port, () => {
+app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
