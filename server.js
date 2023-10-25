@@ -1,19 +1,10 @@
+import * as path from 'path';
+import * as url from "url";
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
-const express = require('express');
 import { config } from "dotenv";
 config();
 
-const { createServer } = require('http');
-const fs = require('fs');
-const bodyParser = require('body-parser');
-
-const { Server } = require('socket.io');
-
-// const OpenAI = require('openai');
-// const openaibot = new OpenAI({
-//   apiKey: process.env.OPENAI_API_KEY,
-// })
 
 import { OpenAI } from "langchain/llms/openai";
 import {  RetrievalQAChain  } from "langchain/chains";
@@ -29,8 +20,16 @@ import { initializeAgentExecutorWithOptions } from "langchain/agents";
 import { HumanMessage, AIMessage } from "langchain/schema";
 import { ChatMessageHistory } from "langchain/memory";
 import { Calculator } from "langchain/tools/calculator";
-import * as path from 'path';
-import * as url from "url";
+
+
+const express = require('express');
+const { createServer } = require('http');
+const fs = require('fs');
+const bodyParser = require('body-parser');
+
+const { Server } = require('socket.io');
+
+
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 const embeddings = new OpenAIEmbeddings();
@@ -46,7 +45,7 @@ const llm = new OpenAI({
 });
 
 const chat = new ChatOpenAI({
-  openAIApiKey: process.env.OPENAI_API_KEY,,
+  openAIApiKey: process.env.OPENAI_API_KEY,
   temperature: 0.5,
   modelName: process.env.CHATGPT_MODEL_NAME,
   topP: parseInt(process.env.TOP_P),
@@ -132,10 +131,10 @@ const tools = [
     new WikipediaQueryRun()
     ];
 
-console.log(tools[0])
+
   const previousMessages = [
     new HumanMessage("My name is Toan"),
-    new AIMessage("I am Teddy. I am an employee of a company called Digicon."),
+    new AIMessage("I am Teddy. I am an employee of a company called Digicon. I am talkative, funny friend and I can help to provide lots of specific help on learning English. I am not an assistant but a friend and a teacher to help you learn English"),
   ];
   
   const chatHistory = new ChatMessageHistory(previousMessages);
@@ -153,7 +152,7 @@ const executor = await initializeAgentExecutorWithOptions(tools, chat, {
     verbose: false,
   });
 // executor.agent.llmChain.prompt.template = sys_message
-
+console.log(executor.agent.llmChain.prompt)
 
 const app = express();
 const httpServer = createServer(app);
@@ -178,11 +177,6 @@ app.post('/get_response', async (req, res) => {
   console.log(ChatCompletion.output)
   res.send(ChatCompletion.output.replace(/\n/g, "<br />"))
   
-  // let ChatCompletion = await chain_1.call({
-  //   input: question,
-  // })
-  // console.log(ChatCompletion.response);
-  // res.send(ChatCompletion.response);
 })
 
 
