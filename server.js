@@ -46,7 +46,7 @@ const llm = new OpenAI({
 });
 
 const chat = new ChatOpenAI({
-  openAIApiKey: "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",
+  openAIApiKey: process.env.OPENAI_API_KEY,,
   temperature: 0.5,
   modelName: process.env.CHATGPT_MODEL_NAME,
   topP: parseInt(process.env.TOP_P),
@@ -134,8 +134,8 @@ const tools = [
 
 console.log(tools[0])
   const previousMessages = [
-    new HumanMessage("My name is Bob"),
-    new AIMessage("Nice to meet you, Bob!"),
+    new HumanMessage("My name is Toan"),
+    new AIMessage("I am Teddy. I am an employee of a company called Digicon."),
   ];
   
   const chatHistory = new ChatMessageHistory(previousMessages);
